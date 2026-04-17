@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Todo Card</title>
+<link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+
+<article data-testid="test-todo-card" id="todo-card" aria-label="Todo task card">
+
+  <div class="priority-bar high" id="priority-bar"
+    data-testid="test-todo-priority-indicator"
+    aria-label="Priority: High">
+  </div>
+
+  <div class="card-body">
+
+    <div class="card-header">
+      <div class="checkbox-wrap">
+        <label for="chk" class="sr-only">Mark task as complete</label>
+        <input
+          type="checkbox"
+          id="chk"
+          data-testid="test-todo-complete-toggle"
+          aria-label="Mark task as complete"
+          onchange="handleToggle(this)"
+        />
+      </div>
+      <div class="title-area">
+        <h2 class="card-title" data-testid="test-todo-title" id="todo-title">
+          Complete TypeScript Assignment
+        </h2>
+        <div class="badges-row">
+          <span class="priority-dot high" id="priority-dot"></span>
+          <span class="badge high" data-testid="test-todo-priority"
+            id="priority-badge" aria-label="Priority: High">High</span>
+          <span class="badge pending" data-testid="test-todo-status"
+            id="status-badge" aria-label="Status: Pending">Pending</span>
+          <span class="badge overdue" data-testid="test-todo-overdue-indicator"
+            id="overdue-indicator" style="display:none"
+            aria-live="assertive">Overdue</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc-section">
+      <div
+        data-testid="test-todo-collapsible-section"
+        id="collapsible-section"
+        class="desc-text collapsed"
+        aria-expanded="false"
+      >
+        <p data-testid="test-todo-description" id="todo-desc">
+          Complete all 5 questions in the TypeScript Playground covering
+          generics, type aliases, utility types, and the any vs unknown
+          distinction. Submit the shareable URL before the deadline. Make
+          sure all test IDs are present and all edge cases are handled
+          properly before submission.
+        </p>
+      </div>
+      <button
+        class="expand-toggle visible"
+        data-testid="test-todo-expand-toggle"
+        id="expand-toggle"
+        aria-expanded="false"
+        aria-controls="collapsible-section"
+        onclick="toggleExpand()"
+      >Show more ▾</button>
+    </div>
+
+    <div class="meta-section">
+      <div class="meta-item">
+        <span class="meta-label">Due date</span>
+        <time data-testid="test-todo-due-date" id="due-display"
+          datetime="2026-04-18">Apr 18, 2026</time>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Time remaining</span>
+        <span data-testid="test-todo-time-remaining" class="meta-value"
+          id="time-remaining" aria-live="polite">Calculating...</span>
+      </div>
+    </div>
+
+    <div class="status-section">
+      <span class="status-label">Status</span>
+      <select
+        class="status-control"
+        data-testid="test-todo-status-control"
+        id="status-control"
+        aria-label="Change task status"
+        onchange="handleStatusChange(this.value)"
+      >
+        <option value="pending">Pending</option>
+        <option value="progress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+    </div>
+
+    <div class="tags-section">
+      <p class="tags-lbl">Tags</p>
+      <ul role="list" class="tags" data-testid="test-todo-tags" id="tags-list"></ul>
+      <div class="tag-add">
+        <input
+          type="text"
+          id="tag-input"
+          placeholder="Add a tag..."
+          maxlength="20"
+          onkeydown="if(event.key==='Enter') addTag()"
+          aria-label="New tag name"
+        />
+        <button onclick="addTag()" aria-label="Add tag">+ Add</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="edit-form" id="edit-form"
+    data-testid="test-todo-edit-form"
+    role="region"
+    aria-label="Edit task form">
+    <div class="field">
+      <label for="e-title">Title</label>
+      <input type="text" id="e-title"
+        data-testid="test-todo-edit-title-input"
+        placeholder="Task title"/>
+    </div>
+    <div class="field">
+      <label for="e-desc">Description</label>
+      <textarea id="e-desc"
+        data-testid="test-todo-edit-description-input"
+        placeholder="Task description"></textarea>
+    </div>
+    <div class="fields-row">
+      <div class="field">
+        <label for="e-priority">Priority</label>
+        <select id="e-priority" data-testid="test-todo-edit-priority-select">
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="e-due">Due date</label>
+        <input type="date" id="e-due"
+          data-testid="test-todo-edit-due-date-input"/>
+      </div>
+    </div>
+    <div class="edit-actions">
+      <button class="btn-cancel"
+        data-testid="test-todo-cancel-button"
+        onclick="cancelEdit()">Cancel</button>
+      <button class="btn-save"
+        data-testid="test-todo-save-button"
+        onclick="saveEdit()">Save changes</button>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="act" data-testid="test-todo-edit-button"
+      id="edit-btn" aria-label="Edit task"
+      onclick="openEdit()">Edit</button>
+    <button class="act del" data-testid="test-todo-delete-button"
+      aria-label="Delete task"
+      onclick="deleteCard()">Delete</button>
+  </div>
+
+</article>
+<script src="index.js"></script>
+</body>
+</html>
